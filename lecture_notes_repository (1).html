@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Vault - Lecture Notes & PDFs</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { backdrop-filter: blur(8px); }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-30 glass">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-500/30">
+                    🚀
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">Class Vault</h1>
+                    <p class="text-xs text-slate-400">Share & grab notes with the squad</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <button id="howToPublishBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-question text-indigo-400"></i> How to Publish?
+                </button>
+                <button id="addNoteBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                    <i class="fa-solid fa-plus"></i> Drop Note / PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+        
+        <!-- Hero Section -->
+        <section class="mb-8">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-700/60 shadow-xl">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white">Yo! Welcome to Class Vault 👋</h2>
+                <p class="text-slate-400 text-sm md:text-base mb-6">Your central hub for class notes, past exams, and free textbooks. Drop a link or find what you need!</p>
+
+                <!-- Search Input -->
+                <div class="relative max-w-2xl">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search notes, topics, or classmates..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters & Stats -->
+        <section class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap gap-2" id="filterPills">
+                <button data-cat="All" class="filter-btn active bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition">All</button>
+                <button data-cat="Calculus" class="filter-btn bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 px-4 py-1.5 rounded-lg text-xs font-semibold transition">Calculus</button>
+                <button data-cat="Linear Algebra" class="filter-btn bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 px-4 py-1.5 rounded-lg text-xs font-semibold transition">Linear Algebra</button>
+                <button data-cat="Chemistry" class="filter-btn bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 px-4 py-1.5 rounded-lg text-xs font-semibold transition">Chemistry</button>
+                <button data-cat="Free Textbooks" class="filter-btn bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 px-4 py-1.5 rounded-lg text-xs font-semibold transition">Free Textbooks</button>
+                <button data-cat="General" class="filter-btn bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200 px-4 py-1.5 rounded-lg text-xs font-semibold transition">General</button>
+            </div>
+
+            <!-- Total count indicator -->
+            <div class="text-xs text-slate-400 font-medium flex items-center gap-3">
+                <span>Showing <span id="itemCount" class="text-indigo-400 font-bold">0</span> items</span>
+                <button id="clearStorageBtn" class="text-slate-500 hover:text-red-400 transition hidden text-xs underline">Clear local entries</button>
+            </div>
+        </section>
+
+        <!-- Notes Grid -->
+        <section id="notesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamic Content Injected Here -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-20 bg-slate-800/30 rounded-2xl border border-dashed border-slate-700/80 p-8">
+            <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 text-indigo-400">
+                📚
+            </div>
+            <h3 class="text-lg font-bold text-slate-200 mb-1">No notes here yet!</h3>
+            <p class="text-slate-400 text-sm max-w-md mx-auto mb-6">Click the <b>"+ Drop Note / PDF"</b> button above to share the first note or textbook link with the squad.</p>
+            <button id="emptyAddBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-semibold transition inline-flex items-center gap-2 shadow-lg shadow-indigo-600/20">
+                <i class="fa-solid fa-plus"></i> Add First Note
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-6 mt-12 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>Class Vault &bull; Built for sharing study materials</div>
+            <div>Hosted on GitHub Pages</div>
+        </div>
+    </footer>
+
+    <!-- ADD NOTE MODAL -->
+    <div id="addModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl transform transition-all">
+            <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/80">
+                <h3 class="font-bold text-lg text-slate-100"><i class="fa-solid fa-cloud-arrow-up text-indigo-400 mr-2"></i>Drop a Note or PDF</h3>
+                <button id="closeModalBtn" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="noteForm" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Title *</label>
+                    <input type="text" id="noteTitle" required placeholder="e.g. Calculus Ch.3 Summary PDF, Linear Algebra Cheat Sheet" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Category *</label>
+                        <select id="noteCategory" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                            <option value="Calculus">Calculus</option>
+                            <option value="Linear Algebra">Linear Algebra</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Free Textbooks">Free Textbooks</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Your Name / Nickname</label>
+                        <input type="text" id="noteAuthor" placeholder="e.g. Alex" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">PDF / File URL *</label>
+                    <input type="url" id="noteUrl" required placeholder="https://drive.google.com/file/... or direct link" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                    <p class="text-[11px] text-slate-500 mt-1">Paste a Google Drive link, Dropbox link, or GitHub raw PDF URL.</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Description / Remarks</label>
+                    <textarea id="noteDesc" rows="2" placeholder="e.g. Covers midterm chapters 1 to 4 with practice problems" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button" id="cancelBtn" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-400 hover:bg-slate-700/50 transition">Cancel</button>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl text-sm font-semibold transition shadow-lg shadow-indigo-600/20">Add Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SYNC CODE MODAL -->
+    <div id="syncModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl">
+            <h3 class="font-bold text-lg text-emerald-400 mb-2"><i class="fa-solid fa-circle-check mr-2"></i>Note Added locally!</h3>
+            <p class="text-sm text-slate-300 mb-4">
+                This note is saved in your browser! If you want to make it permanent on GitHub so <b>ALL your friends see it</b>, copy the snippet below and add it into the <code>initialNotes</code> array in <code>index.html</code>.
+            </p>
+
+            <div class="relative mb-4">
+                <textarea id="codeSnippet" readonly rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-mono text-emerald-300 focus:outline-none"></textarea>
+                <button id="copySnippetBtn" class="absolute top-2 right-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">
+                    <i class="fa-regular fa-copy mr-1"></i> Copy Code
+                </button>
+            </div>
+
+            <div class="flex justify-end">
+                <button id="closeSyncBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW TO PUBLISH MODAL -->
+    <div id="publishModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 shadow-2xl">
+            <div class="flex justify-between items-center pb-4 mb-4 border-b border-slate-700">
+                <h3 class="font-bold text-lg text-white"><i class="fa-solid fa-rocket text-indigo-400 mr-2"></i>How to Publish on GitHub Pages</h3>
+                <button id="closePublishBtn" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-300">
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-semibold text-indigo-300 mb-1">Step 1: Create GitHub Repo</h4>
+                    <p class="text-xs text-slate-400">Go to <a href="https://github.com/new" target="_blank" class="text-indigo-400 underline">github.com/new</a>. Name it <code>class-vault</code> or whatever you like. Make it <b>Public</b> and check "Add a README file".</p>
+                </div>
+
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-semibold text-indigo-300 mb-1">Step 2: Upload index.html</h4>
+                    <p class="text-xs text-slate-400">Save this page's code as <code>index.html</code>. In your repo, click <b>Add file &gt; Upload files</b>, drag <code>index.html</code>, and click <b>Commit changes</b>.</p>
+                </div>
+
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-semibold text-indigo-300 mb-1">Step 3: Enable Pages</h4>
+                    <p class="text-xs text-slate-400">Go to <b>Settings &gt; Pages</b>. Under Source, choose <code>Deploy from a branch</code>. Select branch <code>main</code> and click <b>Save</b>.</p>
+                </div>
+
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-semibold text-indigo-300 mb-1">Step 4: Share Link with Friends!</h4>
+                    <p class="text-xs text-slate-400">Wait ~1 minute. You'll get a live link like <code>https://yourusername.github.io/class-vault/</code>. Share it in your group chat!</p>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button id="closePublishBtn2" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl text-sm font-semibold transition">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // CLEAN INITIAL STATE: Add permanent notes here whenever you want!
+        const initialNotes = [];
+
+        // App State
+        let currentFilter = 'All';
+        let searchQuery = '';
+        let userNotes = [];
+
+        // DOM Elements
+        const notesContainer = document.getElementById('notesContainer');
+        const emptyState = document.getElementById('emptyState');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const itemCount = document.getElementById('itemCount');
+        const clearStorageBtn = document.getElementById('clearStorageBtn');
+        
+        const addModal = document.getElementById('addModal');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const emptyAddBtn = document.getElementById('emptyAddBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const noteForm = document.getElementById('noteForm');
+
+        const syncModal = document.getElementById('syncModal');
+        const closeSyncBtn = document.getElementById('closeSyncBtn');
+        const codeSnippet = document.getElementById('codeSnippet');
+        const copySnippetBtn = document.getElementById('copySnippetBtn');
+
+        const publishModal = document.getElementById('publishModal');
+        const howToPublishBtn = document.getElementById('howToPublishBtn');
+        const closePublishBtn = document.getElementById('closePublishBtn');
+        const closePublishBtn2 = document.getElementById('closePublishBtn2');
+
+        // Load data on start
+        window.addEventListener('DOMContentLoaded', () => {
+            loadNotes();
+            renderNotes();
+        });
+
+        function loadNotes() {
+            const stored = localStorage.getItem('class_vault_user_notes');
+            if (stored) {
+                try {
+                    userNotes = JSON.parse(stored);
+                } catch(e) {
+                    userNotes = [];
+                }
+            } else {
+                userNotes = [];
+            }
+
+            if (userNotes.length > 0) {
+                clearStorageBtn.classList.remove('hidden');
+            } else {
+                clearStorageBtn.classList.add('hidden');
+            }
+        }
+
+        function getAllItems() {
+            return [...userNotes, ...initialNotes];
+        }
+
+        function getCategoryStyle(category) {
+            switch(category) {
+                case 'Calculus':
+                    return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+                case 'Linear Algebra':
+                    return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                case 'Chemistry':
+                    return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                case 'Free Textbooks':
+                    return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                default:
+                    return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+            }
+        }
+
+        function renderNotes() {
+            const allItems = getAllItems();
+            
+            const filtered = allItems.filter(item => {
+                const matchesCategory = (currentFilter === 'All') || (item.category === currentFilter);
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      (item.author && item.author.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchesCategory && matchesSearch;
+            });
+
+            itemCount.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                notesContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            notesContainer.innerHTML = filtered.map(item => `
+                <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-5 hover:border-slate-600 transition flex flex-col justify-between shadow-md hover:shadow-xl group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs px-2.5 py-1 rounded-md font-semibold border ${getCategoryStyle(item.category)}">
+                                ${item.category}
+                            </span>
+                            <span class="text-xs text-slate-500 font-medium">
+                                <i class="fa-regular fa-calendar mr-1"></i>${item.date}
+                            </span>
+                        </div>
+
+                        <h3 class="text-base font-bold text-slate-100 group-hover:text-indigo-300 transition line-clamp-2 mb-2">
+                            ${escapeHtml(item.title)}
+                        </h3>
+
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-3">
+                            ${escapeHtml(item.desc || 'No additional description provided.')}
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-700/60 flex items-center justify-between mt-auto">
+                        <div class="text-xs text-slate-500 font-medium">
+                            ${item.author ? `<i class="fa-regular fa-user mr-1 text-slate-400"></i> By <span class="text-slate-300 font-semibold">${escapeHtml(item.author)}</span>` : 'Anonymous'}
+                        </div>
+                        <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-download"></i> Get Note / PDF
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-indigo-600', 'text-white');
+                    b.classList.add('bg-slate-800', 'text-slate-400');
+                });
+                btn.classList.add('active', 'bg-indigo-600', 'text-white');
+                btn.classList.remove('bg-slate-800', 'text-slate-400');
+
+                currentFilter = btn.dataset.cat;
+                renderNotes();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            renderNotes();
+        });
+
+        const openAddModal = () => addModal.classList.remove('hidden');
+        addNoteBtn.addEventListener('click', openAddModal);
+        emptyAddBtn.addEventListener('click', openAddModal);
+        closeModalBtn.addEventListener('click', () => addModal.classList.add('hidden'));
+        cancelBtn.addEventListener('click', () => addModal.classList.add('hidden'));
+
+        howToPublishBtn.addEventListener('click', () => publishModal.classList.remove('hidden'));
+        closePublishBtn.addEventListener('click', () => publishModal.classList.add('hidden'));
+        closePublishBtn2.addEventListener('click', () => publishModal.classList.add('hidden'));
+
+        noteForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newNote = {
+                id: Date.now().toString(),
+                title: document.getElementById('noteTitle').value.trim(),
+                category: document.getElementById('noteCategory').value,
+                date: new Date().toISOString().split('T')[0],
+                author: document.getElementById('noteAuthor').value.trim() || 'Classmate',
+                url: document.getElementById('noteUrl').value.trim(),
+                desc: document.getElementById('noteDesc').value.trim()
+            };
+
+            userNotes.unshift(newNote);
+            localStorage.setItem('class_vault_user_notes', JSON.stringify(userNotes));
+
+            noteForm.reset();
+            addModal.classList.add('hidden');
+
+            loadNotes();
+            renderNotes();
+
+            showSyncSnippet(newNote);
+        });
+
+        function showSyncSnippet(note) {
+            const formattedJson = JSON.stringify(note, null, 4);
+            codeSnippet.value = `// Paste this inside initialNotes array in index.html:\n${formattedJson},`;
+            syncModal.classList.remove('hidden');
+        }
+
+        closeSyncBtn.addEventListener('click', () => syncModal.classList.add('hidden'));
+
+        copySnippetBtn.addEventListener('click', () => {
+            codeSnippet.select();
+            document.execCommand('copy');
+            copySnippetBtn.innerHTML = `<i class="fa-solid fa-check mr-1 text-emerald-400"></i> Copied!`;
+            setTimeout(() => {
+                copySnippetBtn.innerHTML = `<i class="fa-regular fa-copy mr-1"></i> Copy Code`;
+            }, 2000);
+        });
+
+        clearStorageBtn.addEventListener('click', () => {
+            localStorage.removeItem('class_vault_user_notes');
+            loadNotes();
+            renderNotes();
+        });
+    </script>
+</body>
+</html>
