@@ -47,7 +47,7 @@
         <!-- Hero Section -->
         <section class="mb-8">
             <div class="bg-gradient-to-r from-slate-800 to-slate-800/50 p-6 md:p-8 rounded-2xl border border-slate-700/60 shadow-xl">
-                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white">Yo! Welcome to Class Vault 👋</h2>
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-white">This is Fha K'n Lecture Vault brothers</h2>
                 <p class="text-slate-400 text-sm md:text-base mb-6">Your central hub for class notes, past exams, and free textbooks. Drop a link or find what you need!</p>
 
                 <!-- Search Input -->
@@ -136,7 +136,6 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">PDF / File Name or URL *</label>
-                    <!-- type="text"로 변경하여 파일 이름만 적어도 경고 안 뜨게 수정 완료! -->
                     <input type="text" id="noteUrl" required placeholder="Linear_Algebra_w1_lecture_note.pdf" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
                     <p class="text-[11px] text-slate-500 mt-1">Type the filename (e.g. note.pdf) if uploaded in the same repo, or paste any URL.</p>
                 </div>
@@ -208,7 +207,18 @@
 
     <!-- JavaScript -->
     <script>
-        const initialNotes = [];
+        // 모든 디바이스에서 보이도록 여기에 영구 저장했습니다!
+        const initialNotes = [
+            {
+                "id": "1",
+                "title": "Linear Algebra Week 1 Lecture Note",
+                "category": "Linear Algebra",
+                "date": "2026-10-27",
+                "author": "Steve",
+                "url": "Linear_Algebra_w1_lecture_note.pdf",
+                "desc": "Some essential concepts were added"
+            }
+        ];
 
         let currentFilter = 'All';
         let searchQuery = '';
@@ -322,7 +332,6 @@
                         <div class="text-xs text-slate-500 font-medium">
                             ${item.author ? `<i class="fa-regular fa-user mr-1 text-slate-400"></i> By <span class="text-slate-300 font-semibold">${escapeHtml(item.author)}</span>` : 'Anonymous'}
                         </div>
-                        <!-- download 속성을 추가하여 클릭 시 곧바로 파일 다운로드 실행 -->
                         <a href="${escapeHtml(item.url)}" download class="bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
                             <i class="fa-solid fa-download"></i> Download PDF
                         </a>
