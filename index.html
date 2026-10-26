@@ -114,7 +114,7 @@
             <form id="noteForm" class="p-6 space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Title *</label>
-                    <input type="text" id="noteTitle" required placeholder="e.g. Calculus Ch.3 Summary PDF, Linear Algebra Cheat Sheet" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="noteTitle" required placeholder="e.g. Calculus Ch.3 Summary PDF" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
@@ -130,19 +130,20 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">Your Name / Nickname</label>
-                        <input type="text" id="noteAuthor" placeholder="e.g. Alex" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                        <input type="text" id="noteAuthor" placeholder="e.g. Steve" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">PDF / File URL *</label>
-                    <input type="url" id="noteUrl" required placeholder="https://drive.google.com/file/... or direct link" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
-                    <p class="text-[11px] text-slate-500 mt-1">Paste a Google Drive link, Dropbox link, or GitHub raw PDF URL.</p>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">PDF / File Name or URL *</label>
+                    <!-- type="text"로 변경하여 파일 이름만 적어도 경고 안 뜨게 수정 완료! -->
+                    <input type="text" id="noteUrl" required placeholder="Linear_Algebra_w1_lecture_note.pdf" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+                    <p class="text-[11px] text-slate-500 mt-1">Type the filename (e.g. note.pdf) if uploaded in the same repo, or paste any URL.</p>
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">Description / Remarks</label>
-                    <textarea id="noteDesc" rows="2" placeholder="e.g. Covers midterm chapters 1 to 4 with practice problems" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
+                    <textarea id="noteDesc" rows="2" placeholder="e.g. Week 1 lecture note" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500"></textarea>
                 </div>
 
                 <div class="pt-2 flex justify-end gap-3">
@@ -158,7 +159,7 @@
         <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl">
             <h3 class="font-bold text-lg text-emerald-400 mb-2"><i class="fa-solid fa-circle-check mr-2"></i>Note Added locally!</h3>
             <p class="text-sm text-slate-300 mb-4">
-                This note is saved in your browser! If you want to make it permanent on GitHub so <b>ALL your friends see it</b>, copy the snippet below and add it into the <code>initialNotes</code> array in <code>index.html</code>.
+                This note is saved in your browser! To make it permanent on GitHub so <b>all friends see it</b>, copy the snippet below and add it into the <code>initialNotes</code> array.
             </p>
 
             <div class="relative mb-4">
@@ -185,22 +186,17 @@
             <div class="space-y-4 text-sm text-slate-300">
                 <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
                     <h4 class="font-semibold text-indigo-300 mb-1">Step 1: Create GitHub Repo</h4>
-                    <p class="text-xs text-slate-400">Go to <a href="https://github.com/new" target="_blank" class="text-indigo-400 underline">github.com/new</a>. Name it <code>class-vault</code> or whatever you like. Make it <b>Public</b> and check "Add a README file".</p>
+                    <p class="text-xs text-slate-400">Go to <a href="https://github.com/new" target="_blank" class="text-indigo-400 underline">github.com/new</a>. Name it <code>class-vault</code>. Make it <b>Public</b> and check "Add a README file".</p>
                 </div>
 
                 <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
-                    <h4 class="font-semibold text-indigo-300 mb-1">Step 2: Upload index.html</h4>
-                    <p class="text-xs text-slate-400">Save this page's code as <code>index.html</code>. In your repo, click <b>Add file &gt; Upload files</b>, drag <code>index.html</code>, and click <b>Commit changes</b>.</p>
+                    <h4 class="font-semibold text-indigo-300 mb-1">Step 2: Upload index.html & PDFs</h4>
+                    <p class="text-xs text-slate-400">Upload both your <code>index.html</code> and your PDF files (e.g., <code>Linear_Algebra_w1_lecture_note.pdf</code>) into the same repository!</p>
                 </div>
 
                 <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
                     <h4 class="font-semibold text-indigo-300 mb-1">Step 3: Enable Pages</h4>
-                    <p class="text-xs text-slate-400">Go to <b>Settings &gt; Pages</b>. Under Source, choose <code>Deploy from a branch</code>. Select branch <code>main</code> and click <b>Save</b>.</p>
-                </div>
-
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/50">
-                    <h4 class="font-semibold text-indigo-300 mb-1">Step 4: Share Link with Friends!</h4>
-                    <p class="text-xs text-slate-400">Wait ~1 minute. You'll get a live link like <code>https://yourusername.github.io/class-vault/</code>. Share it in your group chat!</p>
+                    <p class="text-xs text-slate-400">Go to <b>Settings &gt; Pages</b>. Choose <code>Deploy from a branch</code>, select branch <code>main</code>, and click <b>Save</b>.</p>
                 </div>
             </div>
 
@@ -210,17 +206,14 @@
         </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript -->
     <script>
-        // CLEAN INITIAL STATE: Add permanent notes here whenever you want!
         const initialNotes = [];
 
-        // App State
         let currentFilter = 'All';
         let searchQuery = '';
         let userNotes = [];
 
-        // DOM Elements
         const notesContainer = document.getElementById('notesContainer');
         const emptyState = document.getElementById('emptyState');
         const searchInput = document.getElementById('searchInput');
@@ -245,7 +238,6 @@
         const closePublishBtn = document.getElementById('closePublishBtn');
         const closePublishBtn2 = document.getElementById('closePublishBtn2');
 
-        // Load data on start
         window.addEventListener('DOMContentLoaded', () => {
             loadNotes();
             renderNotes();
@@ -276,16 +268,11 @@
 
         function getCategoryStyle(category) {
             switch(category) {
-                case 'Calculus':
-                    return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-                case 'Linear Algebra':
-                    return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-                case 'Chemistry':
-                    return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-                case 'Free Textbooks':
-                    return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-                default:
-                    return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+                case 'Calculus': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+                case 'Linear Algebra': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                case 'Chemistry': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                case 'Free Textbooks': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                default: return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
             }
         }
 
@@ -295,8 +282,8 @@
             const filtered = allItems.filter(item => {
                 const matchesCategory = (currentFilter === 'All') || (item.category === currentFilter);
                 const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                      item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                      (item.author && item.author.toLowerCase().includes(searchQuery.toLowerCase()));
+                                    item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                    (item.author && item.author.toLowerCase().includes(searchQuery.toLowerCase()));
                 return matchesCategory && matchesSearch;
             });
 
@@ -335,8 +322,9 @@
                         <div class="text-xs text-slate-500 font-medium">
                             ${item.author ? `<i class="fa-regular fa-user mr-1 text-slate-400"></i> By <span class="text-slate-300 font-semibold">${escapeHtml(item.author)}</span>` : 'Anonymous'}
                         </div>
-                        <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
-                            <i class="fa-solid fa-download"></i> Get Note / PDF
+                        <!-- download 속성을 추가하여 클릭 시 곧바로 파일 다운로드 실행 -->
+                        <a href="${escapeHtml(item.url)}" download class="bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-download"></i> Download PDF
                         </a>
                     </div>
                 </div>
