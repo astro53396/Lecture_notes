@@ -1,2 +1,0 @@
-# Lecture_notes
-shibal
